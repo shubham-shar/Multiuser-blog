@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multi-User Blog</title>
+    <link rel="stylesheet" href="/css/main1.css">
+  </head>
+
+  <body>
+    <div class="main">
+        <div id = "header">
+          <div class="logo">
+            <button type="button" class="logo-button"
+                    onclick="location.href='/';">Multi-User Blog</button>
+          </div>
+          <div class="login-details">
+            {% if uid: %}
+              <a href="/newpost" class="button">New Post</a>
+              |
+              <a href="/logout" class="button">Logout</a>
+            {% else: %}
+              <a href="/signup" class="button">Sign up</a>
+              |
+              <a href="/login" class="button">Login</a>
+            {% endif %}
+          </div>
+        </div>
+        <hr>
+      <div>
+        <div id="content">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+
+    </div>
+  </body>
+
+</html>

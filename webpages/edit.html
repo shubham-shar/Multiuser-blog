@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if error %}
+    <div>
+      <p>You don't have permission to edit this post</p>
+    </div>
+  {% else %}
+    {% if post %}
+
+      <form method="post">
+        <div>
+          <label>Subject :</label>
+          <input type="text" name="subject" value="{{post.subject}}">
+        </div>
+        <div>
+          <label>Content :</label>
+          <textarea name="content" rows="10">{{post.content}}</textarea>
+        </div>
+
+        {% if error %}
+          <div>
+            {{error}}
+          </div>
+        {% endif %}
+
+        <button type="submit">Submit</button>
+        <a href="/post/{{post.key().id()}}" type="submit">Cancel</a>
+
+      </form>
+
+    {% else %}
+
+      <div>
+        <p>We're sorry, we can't find the post you are looking for</p>
+      </div>
+
+    {% endif %}
+  {% endif %}
+
+{% endblock %}

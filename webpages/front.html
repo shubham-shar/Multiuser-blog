@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if error %}
+    <div>
+      {{error}}
+    </div>
+  {% endif %}
+
+  {% for post in posts %}
+
+    <div class="post-css">
+      <div>
+        <h3>
+          {{post.subject}}
+          <span>
+            {% if post.likes|length < 1 %}
+              | {{post.likes|length}} Likes
+            {% elif post.likes|length < 2 %}
+              | {{post.likes|length}} Like
+            {% else: %}
+              | {{post.likes|length}} Likes
+            {% endif %}
+          </span>
+       </h3>
+      </div>
+      <div>
+        {{ post.content.replace('\n', '<br>') | safe }}
+      </div>
+      <br>
+      <button class="edit-post" type="button" name="button">
+        <a href="/post/{{post.key().id()}}">
+           EDIT
+        </a>
+      </button>
+      <br>
+    </div>
+    <hr>
+  {% endfor %}
+
+{% endblock %}

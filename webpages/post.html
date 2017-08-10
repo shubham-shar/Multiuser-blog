@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if post %}
+
+    <div>
+      <div>
+        <h2>
+          <a href="/post/{{post.key().id()}}">
+            {{post.subject}} | 
+          </a>
+          <a href="/delete/{{post.key().id()}}">
+            delete
+          </a>
+           |
+          <a href="/edit/{{post.key().id()}}">
+            edit
+          </a>
+           |
+          <a href="/like/{{post.key().id()}}">
+            {{likeText}}
+          </a>
+          <span>
+            {% if post.likes|length < 1 %}
+              {{post.likes|length}} Likes
+            {% elif post.likes|length < 2 %}
+              {{post.likes|length}} Like
+            {% else: %}
+              {{post.likes|length}} Likes
+            {% endif %}
+          </span>
+        </h2>
+      </div>
+      <div>
+        {{post._render_text | safe}}
+      </div>
+    </div>
+
+    {% if uid and post.parent_post == None %}
+
+      <div>
+        <div>
+
+          <h2>Add a comment :</h2>
+
+          <form method="post">
+            <div>
+              <label>Subject :</label>
+              <input type="text" name="subject" value={{subject}}>
+            </div>
+            <div>
+              <label>Content :</label>
+              <textarea name="content" rows="5">{{content}}</textarea>
+            </div>
+
+            {% if error %}
+              <div>
+                {{error}}
+              </div>
+            {% endif %}
+
+            <button type="submit">Submit</button>
+
+          </form>
+
+      </div>
+    </div>
+    <br>
+    {% endif %}
+
+    {% for comment in comments %}
+
+      <div>
+        <div>
+
+          <div>
+            <div>
+              <h3>
+                {{comment.subject}}
+                |
+                <a href="/delete/{{comment.key().id()}}">
+                  delete
+                </a>
+                 |
+                <a href="/edit/{{comment.key().id()}}">
+                  edit
+                </a>
+              </h3>
+            </div>
+            <div>
+              {{comment.content}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  {% else %}
+
+    <div>
+      <div>
+        <p>We're sorry, we can't find the post you are looking for</p>
+      </div>
+    </div>
+
+  {% endif %}
+
+{% endblock %}
